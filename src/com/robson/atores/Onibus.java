@@ -12,8 +12,10 @@ public class Onibus {
 			static Pessoa robson = new Pessoa("Robson", 01, Status.AUTORIZADO);
 			static Identificador ide = new Identificador(robson);
 			//.
-	
-	public Onibus(String destino, Double percursoKm, Double tarifa, Double percursoMinutos) {
+	public Onibus() {
+		
+	}
+	public Onibus(String destino,Double tarifa ,Double percursoKm, Double percursoMinutos) {
 		super();
 		this.destino = destino;
 		this.percursoMetros = percursoKm;

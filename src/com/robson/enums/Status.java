@@ -1,17 +1,17 @@
 package com.robson.enums;
 
 public enum Status {
-	AUTORIZADO(0), PENDENTE(1), NAOAUTORIZADO(2);
+	AUTORIZADO("Autorizado"), PENDENTE("Pendente"), NAOAUTORIZADO("NãoAutorizado");
 	
-	private int valor = 0;
-	Status(int i){
-		valor = i;
+	private String situacao ;
+	Status(String s){
+		situacao = s;
 	}
-	public int getStatus() {
-		return valor;
+	public String getStatus() {
+		return situacao;
 	}
-	public void setStatus(int valor) {
-		this.valor = valor;
+	public void setStatus(String i) {
+		this.situacao = i;
 	}
 }
 
