@@ -6,41 +6,41 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.robson.atores.Onibus;
+import com.robson.atores.Identificador;
 import com.robson.conexao.Conexao;
 
-public class OnibusDAO {
+public class IdentificadorDAO {
 	
-	   
-	public List<Onibus> buscar(Onibus p) throws Exception {
+	public List<Identificador> buscar(Identificador i) throws Exception {
         /* Define a SQL */
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT destino_onibus, tarifa_onibus, percursokm_onibus, percurso_minutos_onibus");
-        sql.append("FROM tabela_onibus ");
-        sql.append("WHERE destino_onibus LIKE ? ");
-        sql.append("ORDER BY destino_onibus ");
+        sql.append("SELECT id, nome_pessoa, tempo_partida, tempo_saida, tarifa_total");
+        sql.append("FROM tabela_identificador ");
+        sql.append("WHERE nome_pessoa LIKE ? ");
+        sql.append("ORDER BY id ");
         
         /* Abre a conexão que criamos o retorno é armazenado na variavel conn */
         Connection conn = Conexao.abrir();
 
         /* Mapeamento objeto relacional */
         PreparedStatement comando = conn.prepareStatement(sql.toString());
-        comando.setString(1, "%" + p.getDestino()+ "%");
+        comando.setString(1, "%" + i.getPessoa()+ "%");
 
         /* Executa a SQL e captura o resultado da consulta */
         ResultSet resultado = comando.executeQuery();
 
         /* Cria uma lista para armazenar o resultado da consulta */
-        List<Onibus> lista = new ArrayList<Onibus>();
+        List<Identificador> lista = new ArrayList<Identificador>();
 
         /* Percorre o resultado armazenando os valores em uma lista */
         while (resultado.next()) {
             /* Cria um objeto para armazenar uma linha da consulta */
-            Onibus linha = new Onibus();
-            linha.setDestino(resultado.getString("destino_onibus"));
-            linha.setTarifa(resultado.getDouble("tarifa_onibus"));
-            linha.setPercursoKm(resultado.getDouble("percursokm_onibus"));
-            linha.setPercursoMinutos(resultado.getDouble("percurso_minutos_onibus"));
+            Identificador linha = new Identificador();
+            linha.setId(resultado.getInt("id"));
+            linha.setPessoa(resultado.getObject("nome_pessoa"));
+            linha.setTempoPartida(resultado.getLong("tempo_partida"));
+            linha.setTempoSaida(resultado.getLong("tempo_saida"));
+            linha.setTarifaTotal(resultado.getDouble("tarifa_total"));
             /* Armazena a linha lida em uma lista */
             lista.add(linha);
         }
@@ -54,41 +54,41 @@ public class OnibusDAO {
         return lista;
     }
     
-    public void inserir(Onibus onibus) throws Exception {
+    public void inserir(Identificador i) throws Exception {
     	/* Abre a conexão que criamos o retorno é armazenado na variavel conn */
         Connection conn = Conexao.abrir();
     	
     	   PreparedStatement p = conn.prepareStatement
-    	   ("insert into tabela_onibus (destino_onibus, tarifa_onibus, percursokm_onibus, percurso_minutos_onibus) values (?,?,?,?)");
-    	   p.setString(1, onibus.getDestino());
-    	   p.setDouble(2, onibus.getTarifa());
-    	   p.setDouble(3, onibus.getPercursoKm());
-    	   p.setDouble(4, onibus.getPercursoMinutos());
+    	   ("insert into tabela_identificador (id, nome_pessoa , tempo_partida, tempo_saida, tarifa_total) "
+    	   	+ "values (?,?,?,?,?)");
+    	   p.setInt(1, i.getId());
+    	   p.setObject(2, i.getPessoa());
+    	   p.setDouble(3, i.getTempoPartida());
+    	   p.setDouble(4, i.getTempoSaida());
+    	   p.setDouble(5, i.getTarifaTotal());
     	   p.executeUpdate();
     	   p.close();
     	}
-    public void deletar(Onibus onibus) throws Exception {
+    public void deletar(Identificador i) throws Exception {
     	   /* Abre a conexão que criamos o retorno é armazenado na variavel conn */
     	   Connection conn = Conexao.abrir();
-    	   PreparedStatement p = conn.prepareStatement("delete from tabela_onibus where destino_onibus = ?");
-    	   p.setString(1, onibus.getDestino());
+    	   PreparedStatement p = conn.prepareStatement("delete from tabela_identificador where destino_onibus = ?");
+    	   p.setInt(1, i.getId());
     	   p.executeUpdate();
     	   p.close();
     	}
-    public void update(Onibus onibus) throws Exception {
+    public void update(Identificador i) throws Exception {
     	   /* Abre a conexão que criamos o retorno é armazenado na variavel conn */
  	       Connection conn = Conexao.abrir();
     	   PreparedStatement p = 
     	   conn.prepareStatement
-    	   ("update tabela_onibus set tarifa_onibus = ?, percursokm_onibus = ?, percurso_minutos_onibus = ? where destino_onibus = ?");
-    	   
-    	   p.setDouble(1, onibus.getTarifa());
-    	   p.setDouble(2, onibus.getPercursoKm());
-    	   p.setDouble(3, onibus.getPercursoMinutos());
-    	   p.setString(4,onibus.getDestino() );
+    	   ("update tabela_identificador set nome_pessoa = ?, tempo_saida = ?, tarifa_total = ? where destino_onibus = ?");
+    	  
+    	   p.setObject(1, i.getPessoa());
+    	   p.setLong(2, i.getTempoSaida());
+    	   p.setDouble(3, i.getTarifaTotal());
+    	   p.setInt(4 , i.getId());
     	   p.executeUpdate();
     	   p.close();
     	}
- }
-
-
+}

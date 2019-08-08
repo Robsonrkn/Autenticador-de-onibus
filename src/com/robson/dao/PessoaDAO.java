@@ -1,4 +1,4 @@
-//Codigo do DiegoAlgusto do StackOverflow
+//Parte do codigo do DiegoAlgusto do StackOverflow
 package com.robson.dao;
 
 import java.sql.Connection;
@@ -60,7 +60,7 @@ public class PessoaDAO {
         Connection conn = Conexao.abrir();
     	
     	   PreparedStatement p = conn.prepareStatement
-    	   ("insert into pessoa (nome_pessoa, id_pessoa, idade_pessoa, status_pessoa) values (?,?,?,?)");
+    	   ("insert into tabela_pessoa (nome_pessoa, id_pessoa, idade_pessoa, status_pessoa) values (?,?,?,?)");
     	   p.setString(1, pessoa.getNome());
     	   p.setLong(2, pessoa.getId());
     	   p.setString(3, pessoa.getIdade());
@@ -71,7 +71,7 @@ public class PessoaDAO {
     public void deletar(Pessoa pessoa) throws Exception {
     	   /* Abre a conexão que criamos o retorno é armazenado na variavel conn */
     	   Connection conn = Conexao.abrir();
-    	   PreparedStatement p = conn.prepareStatement("delete from pessoa where id_pessoa = ?");
+    	   PreparedStatement p = conn.prepareStatement("delete from tabela_pessoa where id_pessoa = ?");
     	   p.setInt(1, pessoa.getId());
     	   p.executeUpdate();
     	   p.close();
@@ -81,7 +81,7 @@ public class PessoaDAO {
  	       Connection conn = Conexao.abrir();
     	   PreparedStatement p = 
     	   conn.prepareStatement
-    	   ("update pessoa set nome_pessoa = ?, idade_pessoa = ?, status_pessoa = ? where id_pessoa = ?");
+    	   ("update tabela_pessoa set nome_pessoa = ?, idade_pessoa = ?, status_pessoa = ? where id_pessoa = ?");
     	   p.setString(1, pessoa.getNome());
     	   p.setLong(2, pessoa.getId());
     	   p.setString(3, pessoa.getIdade());

@@ -8,10 +8,6 @@ public class Onibus {
 	private Double tarifa;
 	private Double percursoMinutos;
 	
-	//Código deve ser retirado depois de colocar a conexão de banco de dados
-			static Pessoa robson = new Pessoa("Robson", 01, Status.AUTORIZADO);
-			static Identificador ide = new Identificador(robson);
-			//.
 	public Onibus() {
 		
 	}
@@ -28,9 +24,10 @@ public class Onibus {
 		Double metrosPorMinuto = this.percursoMetros / this.percursoMinutos;
 		Double centavosPorMinuto = this.tarifa / this.percursoMinutos;
 		Double metrosPorMinutoMinimo = metrosPorMinuto * 0.3;
-		long tempoGasto = (saida() - ide.getTempo()) / 60000;
-	
-			precoFinal = (tempoGasto * metrosPorMinuto) * centavosPorMinuto;
+		
+		//logica a ser resolvida.
+		//long tempoGasto = (saida() - ide.getTempo()) / 60000;
+		//precoFinal = (tempoGasto * metrosPorMinuto) * centavosPorMinuto;
 		
 		System.out.print("Total da viagem: " + precoFinal);
 	}
