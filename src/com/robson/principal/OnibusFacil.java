@@ -6,10 +6,13 @@ public class OnibusFacil {
 		
 		Conexao con = new Conexao();
 		try {
+			System.out.print("Conexao feita com sucesso!");
 			con.abrir();
 		}catch(Exception e) {
 			System.out.print("Erro de conxao :"+e.getMessage());
 		}
+		
+		
 		
 		
 	}
