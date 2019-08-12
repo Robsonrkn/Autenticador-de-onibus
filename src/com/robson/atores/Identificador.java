@@ -16,22 +16,23 @@ public class Identificador {
 		
 	}
 	public Identificador(Pessoa pessoa){
-		pessoa = this.pessoa;
+		this.pessoa  = pessoa;
 	}
 	
-	/*
 	public void verificador() {
-	
-		switch(test) {
-	case AUTORIZADO : {System.out.print("Autorizado. Boa Viagem !"); Identificador.inicalizadorDeTempo();}break;
-	case PENDENTE : {System.out.print("Pendente, regularize suas pendencias, para não haver incomodos. Boa Viagem !");
-			Identificador.inicalizadorDeTempo();}break;
-	case NAOAUTORIZADO : System.out.print("Não Autorizado, revise o pagamento de suas outras viagens, ou entre em contato "
-			+ "com a nossa centra 000-000-000. Lamento o incomodo");	
+	String test = pessoa.getStatus();
+		if(test == "AUTORIZADO"){
+			System.out.print("Autorizado. Boa Viagem !"); 
+			Identificador.inicalizadorDeTempo();
+			}else if(test == "PENDENTE"){
+				System.out.print("Pendente, regularize suas pendencias, para não haver incomodos. Boa Viagem !");
+				Identificador.inicalizadorDeTempo();
+			}else if(test == "NAOAUTORIZADO") {
+				System.out.print("Não Autorizado, revise o pagamento de suas outras viagens, ou entre em contato "
+			+ "com a nossa central 000-000-000. Lamento o incomodo");
+			}
 	}
-	}
-	*/
-	
+
 	public static void inicalizadorDeTempo() {
 		tempo = System.currentTimeMillis();
 	}
@@ -39,12 +40,12 @@ public class Identificador {
 	public long getTempo() {
 		return tempo;
 	}
-	public Pessoa getPessoa() {
-		return pessoa;
+	public String getPessoa() {
+		return pessoa.getNome();
 	}
 
-	public void setPessoa(Object pessoa) {
-		this.pessoa = (Pessoa)pessoa;
+	public void setPessoa(String pessoa) {
+		this.pessoa.setNome(pessoa);
 	}
 
 	public Status getStatus() {

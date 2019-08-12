@@ -14,7 +14,7 @@ public class IdentificadorDAO {
 	public List<Identificador> buscar(Identificador i) throws Exception {
         /* Define a SQL */
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT id, nome_pessoa, tempo_partida, tempo_saida, tarifa_total");
+        sql.append("SELECT nome_pessoa, tempo_partida, tempo_saida, tarifa_total");
         sql.append("FROM tabela_identificador ");
         sql.append("WHERE nome_pessoa LIKE ? ");
         sql.append("ORDER BY id ");
@@ -37,7 +37,7 @@ public class IdentificadorDAO {
             /* Cria um objeto para armazenar uma linha da consulta */
             Identificador linha = new Identificador();
             linha.setId(resultado.getInt("id"));
-            linha.setPessoa(resultado.getObject("nome_pessoa"));
+            linha.setPessoa(resultado.getString("nome_pessoa"));
             linha.setTempoPartida(resultado.getLong("tempo_partida"));
             linha.setTempoSaida(resultado.getLong("tempo_saida"));
             linha.setTarifaTotal(resultado.getDouble("tarifa_total"));
@@ -59,13 +59,12 @@ public class IdentificadorDAO {
         Connection conn = Conexao.abrir();
     	
     	   PreparedStatement p = conn.prepareStatement
-    	   ("insert into tabela_identificador (id, nome_pessoa , tempo_partida, tempo_saida, tarifa_total) "
-    	   	+ "values (?,?,?,?,?)");
-    	   p.setInt(1, i.getId());
-    	   p.setObject(2, i.getPessoa());
-    	   p.setDouble(3, i.getTempoPartida());
-    	   p.setDouble(4, i.getTempoSaida());
-    	   p.setDouble(5, i.getTarifaTotal());
+    	   ("insert into tabela_identificador (nome_pessoa , tempo_partida, tempo_saida, tarifa_total) "
+    	   	+ "values (?,?,?,?)");
+    	   p.setString(1, i.getPessoa());
+    	   p.setDouble(2, i.getTempoPartida());
+    	   p.setDouble(3, i.getTempoSaida());
+    	   p.setDouble(4, i.getTarifaTotal());
     	   p.executeUpdate();
     	   p.close();
     	}

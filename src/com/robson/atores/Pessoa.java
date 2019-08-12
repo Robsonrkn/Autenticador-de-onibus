@@ -1,28 +1,31 @@
 package com.robson.atores;
-import com.robson.enums.*;;
+import java.text.ParseException;
+import java.sql.Date;
+
+import com.robson.enums.Status;
+import com.robson.uteis.PadraoData;;
 public class Pessoa {
 	
 	private String nome;
 	private int id;
-	private String idade;
+	private Date idade;
 	private Status status;
 	
 	public Pessoa() {
 		
 	}
 	
-	public Pessoa(String nome, int id,String idade, Status status){
+	public Pessoa(String nome, String idade, Status status) throws ParseException{
 		this.nome = nome  ;
-		this.id = id ;
-		this.idade = idade;
+		this.idade = new Date(PadraoData.StringParaDate(idade).getTime());
 		this.status = status ;
 	}
 
-	public String getIdade() {
+	public Date getIdade() {
 		return idade;
 	}
 
-	public void setIdade(String idade) {
+	public void setIdade(Date idade) {
 		this.idade = idade;
 	}
 

@@ -7,7 +7,7 @@ import java.sql.DriverManager;
 public class Conexao {
 	private static final String USUARIO = "root";
     private static final String SENHA = "";
-    private static final String URL = "jdbc:mysql://localhost:80/test";
+    private static final String URL = "jdbc:mysql://localhost:3306/meu_banco";
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
 
     // Conectar ao banco

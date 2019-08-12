@@ -16,10 +16,10 @@ public class PessoaDAO {
     public List<Pessoa> buscar(Pessoa p) throws Exception {
         /* Define a SQL */
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT id_pessoa, nome_pessoa, idade_cliente, status_pessoa ");
+        sql.append("SELECT id_pessoa, nome_pessoa, idade_pessoa, status_pessoa ");
         sql.append("FROM tabela_pessoa ");
         sql.append("WHERE id_pessoa LIKE ? ");
-        sql.append("ORDER BY nome_cliente ");
+        sql.append("ORDER BY nome_pessoa ");
         
         /* Abre a conexão que criamos o retorno é armazenado na variavel conn */
         Connection conn = Conexao.abrir();
@@ -40,7 +40,7 @@ public class PessoaDAO {
             Pessoa linha = new Pessoa();
             linha.setId(resultado.getInt("id_pessoa"));
             linha.setNome(resultado.getString("nome_pessoa"));
-            linha.setIdade(resultado.getString("idade_pessoa"));
+            linha.setIdade(resultado.getDate("idade_pessoa"));
             linha.setStatus(resultado.getString("status_pessoa"));
             /* Armazena a linha lida em uma lista */
             lista.add(linha);
@@ -60,31 +60,32 @@ public class PessoaDAO {
         Connection conn = Conexao.abrir();
     	
     	   PreparedStatement p = conn.prepareStatement
-    	   ("insert into tabela_pessoa (nome_pessoa, id_pessoa, idade_pessoa, status_pessoa) values (?,?,?,?)");
+    	   ("insert into tabela_pessoa (nome_pessoa, idade_pessoa, status_pessoa) values (?,?,?)");
     	   p.setString(1, pessoa.getNome());
-    	   p.setLong(2, pessoa.getId());
-    	   p.setString(3, pessoa.getIdade());
-    	   p.setString(4, pessoa.getStatus());
+    	   p.setDate(2, pessoa.getIdade());
+    	   p.setString(3, pessoa.getStatus());
     	   p.executeUpdate();
     	   p.close();
+    	   System.out.print("Adicionado com sucesso!");
     	}
     public void deletar(Pessoa pessoa) throws Exception {
     	   /* Abre a conexão que criamos o retorno é armazenado na variavel conn */
     	   Connection conn = Conexao.abrir();
-    	   PreparedStatement p = conn.prepareStatement("delete from tabela_pessoa where id_pessoa = ?");
-    	   p.setInt(1, pessoa.getId());
+    	   PreparedStatement p = conn.prepareStatement("delete from tabela_pessoa where nome_pessoa = ?");
+    	   p.setString(1, pessoa.getNome());
     	   p.executeUpdate();
     	   p.close();
+    	   System.out.print("Adicionado com sucesso!");
     	}
     public void update(Pessoa pessoa) throws Exception {
     	   /* Abre a conexão que criamos o retorno é armazenado na variavel conn */
  	       Connection conn = Conexao.abrir();
     	   PreparedStatement p = 
     	   conn.prepareStatement
-    	   ("update tabela_pessoa set nome_pessoa = ?, idade_pessoa = ?, status_pessoa = ? where id_pessoa = ?");
+    	   ("update tabela_pessoa set nome_pessoa = ?, idade_pessoa = ?, status_pessoa = ? where nome_pessoa = ?");
     	   p.setString(1, pessoa.getNome());
     	   p.setLong(2, pessoa.getId());
-    	   p.setString(3, pessoa.getIdade());
+    	   p.setDate(3, pessoa.getIdade());
     	   p.setString(4, pessoa.getStatus());
     	   p.executeUpdate();
     	   p.close();
