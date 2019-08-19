@@ -50,6 +50,7 @@ public class PessoaDAO {
         resultado.close();
         comando.close();
         conn.close();
+        System.out.println("Busca feita com sucesso!");
 
         /* Retorna a lista contendo o resultado da consulta */
         return lista;
@@ -65,8 +66,8 @@ public class PessoaDAO {
     	   p.setDate(2, pessoa.getIdade());
     	   p.setString(3, pessoa.getStatus());
     	   p.executeUpdate();
+    	   System.out.println("Inserido com sucesso!");
     	   p.close();
-    	   System.out.print("Adicionado com sucesso!");
     	}
     public void deletar(Pessoa pessoa) throws Exception {
     	   /* Abre a conexão que criamos o retorno é armazenado na variavel conn */
@@ -74,8 +75,8 @@ public class PessoaDAO {
     	   PreparedStatement p = conn.prepareStatement("delete from tabela_pessoa where nome_pessoa = ?");
     	   p.setString(1, pessoa.getNome());
     	   p.executeUpdate();
+    	   System.out.println("Deletado com sucesso!");
     	   p.close();
-    	   System.out.print("Adicionado com sucesso!");
     	}
     public void update(Pessoa pessoa) throws Exception {
     	   /* Abre a conexão que criamos o retorno é armazenado na variavel conn */
@@ -88,6 +89,7 @@ public class PessoaDAO {
     	   p.setDate(3, pessoa.getIdade());
     	   p.setString(4, pessoa.getStatus());
     	   p.executeUpdate();
+    	   System.out.println("Atualizado com sucesso!");
     	   p.close();
     	}
  }

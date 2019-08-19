@@ -49,6 +49,7 @@ public class OnibusDAO {
         resultado.close();
         comando.close();
         conn.close();
+        System.out.println("Busca feita com sucesso!");
 
         /* Retorna a lista contendo o resultado da consulta */
         return lista;
@@ -65,6 +66,7 @@ public class OnibusDAO {
     	   p.setDouble(3, onibus.getPercursoKm());
     	   p.setDouble(4, onibus.getPercursoMinutos());
     	   p.executeUpdate();
+    	   System.out.println("Inserido com sucesso!");
     	   p.close();
     	}
     public void deletar(Onibus onibus) throws Exception {
@@ -73,6 +75,7 @@ public class OnibusDAO {
     	   PreparedStatement p = conn.prepareStatement("delete from tabela_onibus where destino_onibus = ?");
     	   p.setString(1, onibus.getDestino());
     	   p.executeUpdate();
+    	   System.out.println("Deletado com sucesso!");
     	   p.close();
     	}
     public void update(Onibus onibus) throws Exception {
@@ -81,12 +84,12 @@ public class OnibusDAO {
     	   PreparedStatement p = 
     	   conn.prepareStatement
     	   ("update tabela_onibus set tarifa_onibus = ?, percursokm_onibus = ?, percurso_minutos_onibus = ? where destino_onibus = ?");
-    	   
     	   p.setDouble(1, onibus.getTarifa());
     	   p.setDouble(2, onibus.getPercursoKm());
     	   p.setDouble(3, onibus.getPercursoMinutos());
     	   p.setString(4,onibus.getDestino() );
     	   p.executeUpdate();
+    	   System.out.println("Atualizado com sucesso!");
     	   p.close();
     	}
  }

@@ -1,7 +1,4 @@
 package com.robson.atores;
-
-import com.robson.enums.Status;
-
 public class Onibus {
 	private String destino;
 	private Double percursoMetros;
@@ -17,23 +14,6 @@ public class Onibus {
 		this.percursoMetros = percursoKm;
 		this.tarifa = tarifa;
 		this.percursoMinutos = percursoMinutos;
-	}
-	
-	public void precoPassagem() {
-		Double precoFinal = 0.0;
-		Double metrosPorMinuto = this.percursoMetros / this.percursoMinutos;
-		Double centavosPorMinuto = this.tarifa / this.percursoMinutos;
-		Double metrosPorMinutoMinimo = metrosPorMinuto * 0.3;
-		
-		//logica a ser resolvida.
-		//long tempoGasto = (saida() - ide.getTempo()) / 60000;
-		//precoFinal = (tempoGasto * metrosPorMinuto) * centavosPorMinuto;
-		
-		System.out.print("Total da viagem: " + precoFinal);
-	}
-	public long saida() {
-		long tempoFinal= System.currentTimeMillis();
-		return tempoFinal;
 	}
 	
 	public String getDestino() {

@@ -7,24 +7,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.robson.atores.Identificador;
+import com.robson.atores.Pessoa;
 import com.robson.conexao.Conexao;
 
 public class IdentificadorDAO {
 	
-	public List<Identificador> buscar(Identificador i) throws Exception {
+	public List<Identificador> buscar(Pessoa i) throws Exception {
         /* Define a SQL */
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT nome_pessoa, tempo_partida, tempo_saida, tarifa_total");
         sql.append("FROM tabela_identificador ");
         sql.append("WHERE nome_pessoa LIKE ? ");
-        sql.append("ORDER BY id ");
+        sql.append("ORDER BY ASC ");
         
         /* Abre a conexão que criamos o retorno é armazenado na variavel conn */
         Connection conn = Conexao.abrir();
 
         /* Mapeamento objeto relacional */
         PreparedStatement comando = conn.prepareStatement(sql.toString());
-        comando.setString(1, "%" + i.getPessoa()+ "%");
+        comando.setString(1, "%" + i.getNome()+ "%");
 
         /* Executa a SQL e captura o resultado da consulta */
         ResultSet resultado = comando.executeQuery();
@@ -36,7 +37,6 @@ public class IdentificadorDAO {
         while (resultado.next()) {
             /* Cria um objeto para armazenar uma linha da consulta */
             Identificador linha = new Identificador();
-            linha.setId(resultado.getInt("id"));
             linha.setPessoa(resultado.getString("nome_pessoa"));
             linha.setTempoPartida(resultado.getLong("tempo_partida"));
             linha.setTempoSaida(resultado.getLong("tempo_saida"));
@@ -49,7 +49,7 @@ public class IdentificadorDAO {
         resultado.close();
         comando.close();
         conn.close();
-
+        System.out.println("Busca feita com sucesso!");
         /* Retorna a lista contendo o resultado da consulta */
         return lista;
     }
@@ -59,21 +59,21 @@ public class IdentificadorDAO {
         Connection conn = Conexao.abrir();
     	
     	   PreparedStatement p = conn.prepareStatement
-    	   ("insert into tabela_identificador (nome_pessoa , tempo_partida, tempo_saida, tarifa_total) "
-    	   	+ "values (?,?,?,?)");
-    	   p.setString(1, i.getPessoa());
-    	   p.setDouble(2, i.getTempoPartida());
-    	   p.setDouble(3, i.getTempoSaida());
-    	   p.setDouble(4, i.getTarifaTotal());
+    	   ("insert into tabela_identificador (nome_pessoa , tempo_partida) "
+    	   	+ "values (?,?)");
+    	   p.setString(1, i.getNome());
+    	   p.setLong(2, i.getTempoPartida());
     	   p.executeUpdate();
+    	   System.out.println("Inserido com sucesso!");
     	   p.close();
     	}
     public void deletar(Identificador i) throws Exception {
     	   /* Abre a conexão que criamos o retorno é armazenado na variavel conn */
     	   Connection conn = Conexao.abrir();
-    	   PreparedStatement p = conn.prepareStatement("delete from tabela_identificador where destino_onibus = ?");
-    	   p.setInt(1, i.getId());
+    	   PreparedStatement p = conn.prepareStatement("delete from tabela_identificador where nome_pessoa = ?");
+    	   p.setString(1, i.getNome());
     	   p.executeUpdate();
+    	   System.out.println("Deletado com sucesso!");
     	   p.close();
     	}
     public void update(Identificador i) throws Exception {
@@ -81,13 +81,13 @@ public class IdentificadorDAO {
  	       Connection conn = Conexao.abrir();
     	   PreparedStatement p = 
     	   conn.prepareStatement
-    	   ("update tabela_identificador set nome_pessoa = ?, tempo_saida = ?, tarifa_total = ? where destino_onibus = ?");
-    	  
-    	   p.setObject(1, i.getPessoa());
-    	   p.setLong(2, i.getTempoSaida());
-    	   p.setDouble(3, i.getTarifaTotal());
-    	   p.setInt(4 , i.getId());
+    	   ("update tabela_identificador set tempo_saida = ?, tarifa_total = ? where nome_pessoa = ?");
+
+    	   p.setLong(1, i.getTempoSaida());
+    	   p.setDouble(2, i.getTarifaTotal());
+    	   p.setString(3, i.getNome());
     	   p.executeUpdate();
+    	   System.out.println("Atualizado com sucesso!");
     	   p.close();
     	}
 }
